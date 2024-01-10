@@ -1,5 +1,5 @@
 # C_Transform_Image
-Programme en Langage C pour transformer des images
+Programme en Langage C pour transformer des images via un Menu au lancement du programme, on sélectionne l'image et quelle action on veut faire sur cette image.
 
 ### Done
 -
