@@ -26,45 +26,38 @@ void welcome() {
     printf("             \\/          \\/            \\/     \\/ \n\n");
 }
 
-// Fonction pour vérifier si le fichier a l'extension .PPM ou .PGM
-int hasValidExtension(const char *filename) {
-    const char *dot = strrchr(filename, '.'); 
-    if(!dot || dot == filename) return 0;
-    return strcmp(dot, ".ppm") == 0 || strcmp(dot, ".pgm") == 0;
-}
+int choix() {
+    int choixUtilisateur;
+    
+    printf("Que souhaitez vous faire ?\n\n");
+    printf("1. Translation d'image\n");
+    printf("2. Rotation d'image\n");
+    printf("0. Quitter\n\n");
+    printf("Entrez votre choix : ");
+    scanf("%d", &choixUtilisateur);
 
-void listImages(const char *directory) {
-    struct dirent *entry;
-    DIR *dp = opendir(directory);
-
-    if (dp == NULL) {
-        perror("Erreur lors de l'ouverture du répertoire");
-        return;
+    switch (choixUtilisateur) {
+        case 1:
+            // Appel fonction translation
+            break;
+        case 2:
+            // Appel fonction rotation
+            break;
+        case 0:
+            printf("Aurevoir.\n");
+            break;
+        default:
+            printf("Choix invalide. Veuillez entrer 0, 1 ou 2.\n");
+            break;
     }
 
-
-    printf("Liste des images dans le dossier:\n\n");
-    while ((entry = readdir(dp)) != NULL) {
-        if (hasValidExtension(entry->d_name)) {
-            printf("%s\n", entry->d_name); 
-        } 
-    }
-
-    closedir(dp);
-}
-
-void selectImage(const char *directory, char *selectedFile) {
-    listImages(directory); 
-
-    printf("\nEntrez le nom de l'image que vous souhaitez modifier (inclure l'extension) : ");
-    scanf("%s", selectedFile);
+    return choixUtilisateur;
 }
 
 int main() {
-    char selectedFileName[256];
-
     welcome();
-    selectImage(".", selectedFileName);
 
-    return 0;
+    choix();
+
+
 }
