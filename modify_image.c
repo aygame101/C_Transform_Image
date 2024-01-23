@@ -165,6 +165,39 @@ GrayImage rotateImage(const GrayImage* image, int angle) {
     return rotatedImage;
 }
 
+// Fonction pour effectuer la translation de l'image vers la droite
+GrayImage translateImage(const GrayImage* image, int x) {
+    int width = image->width;
+    int height = image->height;
+
+    GrayImage translatedImage;
+    translatedImage.width = width;
+    translatedImage.height = height;
+    translatedImage.pixels = (unsigned char*)malloc(width * height);
+
+    if (translatedImage.pixels == NULL) {
+        perror("Erreur d'allocation de mémoire");
+        exit(1);
+    }
+
+    // Effectuer la translation en copiant les pixels de l'image originale
+    for (int y = 0; y < height; y++) {
+        for (int x_dest = 0; x_dest < width; x_dest++) {
+            int x_src = (x_dest - x) % width; // Calculer la nouvelle position x_src
+
+            if (x_src < 0) {
+                x_src += width; // Si x_src est négatif, le ramener à la position valide
+            }
+
+            // Copier le pixel de l'image originale vers l'image traduite
+            translatedImage.pixels[y * width + x_dest] = image->pixels[y * width + x_src];
+        }
+    }
+
+    return translatedImage;
+}
+
+
 
 void choix() {
     int choixUtilisateur;
@@ -173,6 +206,7 @@ void choix() {
     printf("Que souhaitez vous faire ?\n\n");
     printf("1. Miroir de l'image\n");
     printf("2. Rotation de l'image\n");
+    printf("3. Translation de l'image\n");
 
     printf("0. Quitter\n\n");
     printf("Entrez votre choix : ");
@@ -181,6 +215,7 @@ void choix() {
     GrayImage originalImage; // Déclaration
     GrayImage mirroredImage;
     GrayImage rotatedImage;
+    GrayImage translatedImage;
 
     switch (choixUtilisateur) {
         case 1: {
@@ -217,7 +252,27 @@ void choix() {
 
             free(originalImage.pixels);
             free(rotatedImage.pixels);
-            
+
+            break;
+        } case 3: {
+            char filename[256] = "";
+            int x = 0;
+
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            printf("Entrez la valeur de translation (vers la droite, en pixel(s)): ");
+            scanf("%d", &x);
+
+            originalImage = loadPGM(filename);
+            translatedImage = translateImage(&originalImage, x);
+
+            strcat(filename, "_TRANSLATE.pgm");
+            savePGM(filename, &translatedImage);
+
+            free(originalImage.pixels);
+            free(translatedImage.pixels);
+
             break;
         } case 0: {
             printf("\n\n\nAurevoir.\n\n\n");
@@ -238,22 +293,3 @@ int main() {
 
 
 }
-
-
-/*
-int main() {
-    GrayImage originalImage = loadIMA("partiel.ima"); // On charge l'image et on la met dans originalImage
-    GrayImage mirroredImage = mirrorImage(&originalImage); // On créer l'image miroir et on la met dans mirroredImage
-    GrayImage negative_Image = negativeImage(&originalImage); // On créer l'image négative et on la met dans negative_Image
-
-    GrayImage originalImage = loadIMA("partiel.pgm");
-    savePGM("original_img_partiel.pgm", &originalImage); // Appel à la fonction pour sauvegarder l'image sans effet miroir
-    savePGM("mirror_partiel.pgm", &mirroredImage); // Appel à la fonction pour sauvegarder l'image miroir
-    savePGM("negative_partiel.pgm", &negative_Image); // Appel à la fonction pour sauvegarder l'image négative
-
-    free(originalImage.pixels); // On libère la mémoire
-    free(mirroredImage.pixels);
-    free(negative_Image.pixels);
-
-    return 0;
-} */
