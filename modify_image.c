@@ -233,8 +233,11 @@ void choix() {
             free(originalImage.pixels);
             free(mirroredImage.pixels);
 
+            printf("\n\n\nL'image a bien été traité.\n\n\n");
+
             break;
-        } case 2: {
+        }
+        case 2: {
             char filename[256] = "";
             int angle = 0;
 
@@ -253,8 +256,11 @@ void choix() {
             free(originalImage.pixels);
             free(rotatedImage.pixels);
 
+            printf("\n\n\nL'image a bien été traité.\n\n\n");
+
             break;
-        } case 3: {
+        }
+        case 3: {
             char filename[256] = "";
             int x = 0;
 
@@ -273,11 +279,15 @@ void choix() {
             free(originalImage.pixels);
             free(translatedImage.pixels);
 
+            printf("\n\n\nL'image a bien été traité.\n\n\n");
+
             break;
-        } case 0: {
+        }
+        case 0: {
             printf("\n\n\nAurevoir.\n\n\n");
             break;
-        } default: {
+        }
+        default: {
             printf("\n\n\nErreur, veuillez entrer un choix valide.\n\n\n");
             choix();
             break;
