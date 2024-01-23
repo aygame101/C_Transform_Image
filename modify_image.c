@@ -122,6 +122,7 @@ void choix() {
     
     printf("Que souhaitez vous faire ?\n\n");
     printf("1. Miroir de l'image\n");
+    printf("2. Rotation de l'image\n");
 
     printf("0. Quitter\n\n");
     printf("Entrez votre choix : ");
@@ -132,9 +133,20 @@ void choix() {
 
     switch (choixUtilisateur) {
         case 1:
-            originalImage = loadPGM("tt.pgm");
+            char filename[256];
+            printf("Nom du fichier ?");
+            scanf("%s", &filename);
+            
+            char* add_name = "mirror-";
+            
+            originalImage = loadPGM(&filename);
             mirroredImage = mirrorImage(&originalImage);
-            savePGM("mirror_partiel.pgm", &mirroredImage);
+
+            char new_filename[256] = strcat(add_name, filename);
+            savePGM(new_filename, &mirroredImage);
+            break;
+        case 2:
+
             break;
         case 0:
             printf("\n\n\nAurevoir.\n\n\n");
