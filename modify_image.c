@@ -197,6 +197,63 @@ GrayImage translateImage(const GrayImage* image, int x) {
     return translatedImage;
 }
 
+// Fonction pour effectuer un redimensionnement (zoom) de l'image
+GrayImage scaleImage(const GrayImage* image, double scale_factor) {
+    int width = image->width;
+    int height = image->height;
+
+    int new_width = (int)(width * scale_factor);
+    int new_height = (int)(height * scale_factor);
+
+    GrayImage scaledImage;
+    scaledImage.width = new_width;
+    scaledImage.height = new_height;
+    scaledImage.pixels = (unsigned char*)malloc(new_width * new_height);
+
+    if (scaledImage.pixels == NULL) {
+        perror("Erreur d'allocation de mémoire");
+        exit(1);
+    }
+
+    // Parcourir les pixels de l'image résultante
+    for (int y = 0; y < new_height; y++) {
+        for (int x = 0; x < new_width; x++) {
+            // Coordonnées du pixel d'origine correspondant au pixel courant après redimensionnement
+            double src_x = x / scale_factor;
+            double src_y = y / scale_factor;
+
+            // Interpolation bilinéaire pour obtenir la valeur du pixel après redimensionnement
+            int x0 = (int)floor(src_x);
+            int y0 = (int)floor(src_y);
+            int x1 = x0 + 1;
+            int y1 = y0 + 1;
+
+            double dx = src_x - x0;
+            double dy = src_y - y0;
+
+            if (x0 >= 0 && x1 < width && y0 >= 0 && y1 < height) {
+                double pixel00 = image->pixels[y0 * width + x0];
+                double pixel01 = image->pixels[y0 * width + x1];
+                double pixel10 = image->pixels[y1 * width + x0];
+                double pixel11 = image->pixels[y1 * width + x1];
+
+                double interpolated_value = (1.0 - dx) * (1.0 - dy) * pixel00 +
+                                            dx * (1.0 - dy) * pixel01 +
+                                            (1.0 - dx) * dy * pixel10 +
+                                            dx * dy * pixel11;
+
+                scaledImage.pixels[y * new_width + x] = (unsigned char)interpolated_value;
+            } else {
+                // Si les coordonnées sont en dehors de l'image d'origine, remplir en blanc (valeur 255)
+                scaledImage.pixels[y * new_width + x] = 255;
+            }
+        }
+    }
+
+    return scaledImage;
+}
+
+
 
 
 void choix() {
@@ -207,6 +264,7 @@ void choix() {
     printf("1. Miroir de l'image\n");
     printf("2. Rotation de l'image\n");
     printf("3. Translation de l'image\n");
+    printf("4. Redimensionnement (Scale) de l'image\n");
 
     printf("0. Quitter\n\n");
     printf("Entrez votre choix : ");
@@ -216,6 +274,7 @@ void choix() {
     GrayImage mirroredImage;
     GrayImage rotatedImage;
     GrayImage translatedImage;
+    GrayImage scaledImage;
 
     switch (choixUtilisateur) {
         case 1: {
@@ -278,6 +337,29 @@ void choix() {
 
             free(originalImage.pixels);
             free(translatedImage.pixels);
+
+            printf("\n\n\nL'image a bien été traité.\n\n\n");
+
+            break;
+        }
+        case 4: {
+            char filename[256] = "";
+            double scale_factor = 0;
+
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            printf("Entrez le facteur de redimensionnement (entre 0 et 1 pour réduire, supérieur à 1 pour agrandir) : ");
+            scanf("%lf", &scale_factor);
+
+            originalImage = loadPGM(filename);
+            scaledImage = scaleImage(&originalImage, scale_factor);
+
+            strcat(filename, "_SCALE.pgm");
+            savePGM(filename, &scaledImage);
+
+            free(originalImage.pixels);
+            free(scaledImage.pixels);
 
             printf("\n\n\nL'image a bien été traité.\n\n\n");
 
