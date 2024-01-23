@@ -132,25 +132,32 @@ void choix() {
     GrayImage mirroredImage;
 
     switch (choixUtilisateur) {
-        case 1:
-            char filename[256];
-            printf("Nom du fichier ?");
-            scanf("%s", &filename);
-            
-            char* add_name = "mirror-";
-            
-            originalImage = loadPGM(&filename);
+        case 1: {
+            char filename[256] = "";
+
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            originalImage = loadPGM(filename);
             mirroredImage = mirrorImage(&originalImage);
 
-            char new_filename[256] = strcat(add_name, filename);
-            savePGM(new_filename, &mirroredImage);
-            break;
-        case 2:
+            strcat(filename, "_MIROIR.pgm");
+
+            savePGM(filename, &mirroredImage);
+
 
             break;
-        case 0:
+        } case 2: {
+
+            break;
+        } case 0: {
             printf("\n\n\nAurevoir.\n\n\n");
             break;
+        } default: {
+            printf("\n\n\nErreur, veuillez entrer un choix valide.\n\n\n");
+            choix();
+            break;
+        }
     }
 }
 
