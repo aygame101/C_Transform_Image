@@ -284,6 +284,37 @@ GrayImage adjustContrast(const GrayImage* image, double contrast_factor) {
     return adjustedImage;
 }
 
+// Fonction pour ajuster la luminosité de l'image
+GrayImage adjustBrightness(const GrayImage* image, double brightness_factor) {
+    int width = image->width;
+    int height = image->height;
+
+    GrayImage adjustedImage;
+    adjustedImage.width = width;
+    adjustedImage.height = height;
+    adjustedImage.pixels = (unsigned char*)malloc(width * height);
+
+    if (adjustedImage.pixels == NULL) {
+        perror("Erreur d'allocation de mémoire");
+        exit(1);
+    }
+
+    // Parcourir les pixels de l'image
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            double pixel_value = (double)image->pixels[y * width + x];
+            double adjusted_value = pixel_value * brightness_factor;
+
+            // Assurer que la valeur ajustée reste dans la plage [0, 255]
+            adjusted_value = fmin(255.0, fmax(0.0, adjusted_value));
+
+            adjustedImage.pixels[y * width + x] = (unsigned char)adjusted_value;
+        }
+    }
+
+    return adjustedImage;
+}
+
 
 
 void choix() {
@@ -296,6 +327,7 @@ void choix() {
     printf("3. Translation de l'image\n");
     printf("4. Redimensionnement (Scale) de l'image\n\n");
     printf("5. Contraste de l'image\n");
+    printf("6. Luminosité de l'image\n");
 
     printf("\n\n0. Quitter\n\n");
     printf("Entrez votre choix : ");
@@ -307,6 +339,7 @@ void choix() {
     GrayImage translatedImage;
     GrayImage scaledImage;
     GrayImage adjustedImage;
+    GrayImage brightImage;
 
     switch (choixUtilisateur) {
         case 1: {
@@ -417,6 +450,29 @@ void choix() {
             free(adjustedImage.pixels);
 
             printf("\n\n\nL'image a bien été traité.\n\n\n");
+
+            break;
+        }
+        case 6: {
+            char filename[256] = "";
+            double brightness_factor = 0;
+
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            printf("Entrez le facteur de luminosité (entre 0 et 1 pour diminuer, supérieur à 1 pour augmenter) : ");
+            scanf("%lf", &brightness_factor);
+
+            originalImage = loadPGM(filename);
+            adjustedImage = adjustBrightness(&originalImage, brightness_factor);
+
+            strcat(filename, "_BRIGHTNESS.pgm");
+            savePGM(filename, &adjustedImage);
+
+            free(originalImage.pixels);
+            free(adjustedImage.pixels);
+
+            printf("\n\n\nL'image a bien été traitée.\n\n\n");
 
             break;
         }
