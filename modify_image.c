@@ -22,8 +22,7 @@ void welcome() {
 
 // Detecter si le fichier est en ppm ou pgm et executer une fonction en conséquence (fonction en double, une pour pgm et une pour ppm).
 
-// 2. Fonction pour charger l'image au format .pgm
-
+// Fonction pour charger l'image au format .pgm
 GrayImage loadPGM(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (file == NULL) {
@@ -63,7 +62,7 @@ GrayImage loadPGM(const char* filename) {
     return image;
 }
 
-// 3. Fonction pour générer l'image au format .pgm
+// Fonction pour générer l'image au format .pgm
 void savePGM(const char* filename, const GrayImage* image) {
     FILE* file = fopen(filename, "wb");
     if (file == NULL) {
@@ -77,7 +76,7 @@ void savePGM(const char* filename, const GrayImage* image) {
     fclose(file);
 }
 
-// 4. Fonction pour créer l'effet miroir de l'image
+// Fonction pour créer l'effet miroir de l'image
 GrayImage mirrorImage(const GrayImage* image) {
     GrayImage mirroredImage;
     mirroredImage.width = image->width;
@@ -383,6 +382,61 @@ GrayImage applyBlur(const GrayImage* image, int blurAmount) {
     return blurredImage;
 }
 
+// Fonction pour pixeliser l'image en fonction des dimensions spécifiées
+GrayImage pixelizeImage(const GrayImage* image, int pixelWidth, int pixelHeight) {
+    int width = image->width;
+    int height = image->height;
+
+    GrayImage pixelizedImage;
+    pixelizedImage.width = width;
+    pixelizedImage.height = height;
+    pixelizedImage.pixels = (unsigned char*)malloc(width * height);
+
+    if (pixelizedImage.pixels == NULL) {
+        perror("Erreur d'allocation de mémoire");
+        exit(1);
+    }
+
+    // Parcourir l'image par sections
+    for (int y = 0; y < height; y += pixelHeight) {
+        for (int x = 0; x < width; x += pixelWidth) {
+            // Calculer la somme des valeurs des pixels à l'intérieur de la section
+            double sum = 0.0;
+            int count = 0;
+
+            for (int j = 0; j < pixelHeight; j++) {
+                for (int i = 0; i < pixelWidth; i++) {
+                    int newX = x + i;
+                    int newY = y + j;
+
+                    // Assurer que nous sommes à l'intérieur de l'image
+                    if (newX < width && newY < height) {
+                        sum += image->pixels[newY * width + newX];
+                        count++;
+                    }
+                }
+            }
+
+            // Calculer la valeur moyenne des pixels dans la section
+            unsigned char average = (unsigned char)(sum / count);
+
+            // Remplacer les pixels à l'intérieur de la section par la valeur moyenne
+            for (int j = 0; j < pixelHeight; j++) {
+                for (int i = 0; i < pixelWidth; i++) {
+                    int newX = x + i;
+                    int newY = y + j;
+
+                    // Assurer que nous sommes à l'intérieur de l'image
+                    if (newX < width && newY < height) {
+                        pixelizedImage.pixels[newY * width + newX] = average;
+                    }
+                }
+            }
+        }
+    }
+
+    return pixelizedImage;
+}
 
 
 
@@ -400,6 +454,7 @@ void choix() {
     printf("6. Luminosité de l'image\n");
     printf("7. Seuillage de l'image\n\n");
     printf("8. Flou de l'image\n");
+    printf("9. Pixelisation de l'image\n");
 
     printf("\n\n0. Quitter\n\n");
     printf("Entrez votre choix : ");
@@ -586,6 +641,33 @@ void choix() {
             free(adjustedImage.pixels);
 
             printf("\n\n\nL'image a bien été traitée.\n\n\n");
+
+            break;
+        }
+        case 9: {
+            char filename[256] = "";
+            int pixelWidth = 0;
+            int pixelHeight = 0;
+
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            printf("Entrez la largeur de la zone de pixelisation (1: peu pixelisé - 1000: très pixelisé): ");
+            scanf("%d", &pixelWidth);
+
+            printf("Entrez la hauteur de la zone de pixelisation (1: peu pixelisé - 1000: très pixelisé): ");
+            scanf("%d", &pixelHeight);
+
+            originalImage = loadPGM(filename);
+            adjustedImage = pixelizeImage(&originalImage, pixelWidth, pixelHeight);
+
+            strcat(filename, "_PIXELIZED.pgm");
+            savePGM(filename, &adjustedImage);
+
+            free(originalImage.pixels);
+            free(adjustedImage.pixels);
+
+            printf("\n\n\nL'image a bien été pixelisée.\n\n\n");
 
             break;
         }
