@@ -11,8 +11,6 @@ Programme en Langage C pour transformer des images via un Menu au lancement du p
 - Menu pour sélectionner l'action voulu
 
 ### To do
-
-
 - Superposition et soustraction d'image
 - Luminosité
 - Seuillage
