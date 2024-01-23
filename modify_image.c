@@ -127,10 +127,13 @@ void choix() {
     printf("Entrez votre choix : ");
     scanf(" %d", &choixUtilisateur);
 
+    GrayImage originalImage; // Déplacer la déclaration ici
+    GrayImage mirroredImage;
+
     switch (choixUtilisateur) {
         case 1:
-            GrayImage originalImage = loadPGM("tt.pgm");
-            GrayImage mirroredImage = mirrorImage(&originalImage);
+            originalImage = loadPGM("tt.pgm");
+            mirroredImage = mirrorImage(&originalImage);
             savePGM("mirror_partiel.pgm", &mirroredImage);
             break;
         case 0:
