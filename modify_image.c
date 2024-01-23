@@ -334,12 +334,7 @@ void choix() {
     scanf(" %d", &choixUtilisateur);
 
     GrayImage originalImage; // Déclaration
-    GrayImage mirroredImage;
-    GrayImage rotatedImage;
-    GrayImage translatedImage;
-    GrayImage scaledImage;
     GrayImage adjustedImage;
-    GrayImage brightImage;
 
     switch (choixUtilisateur) {
         case 1: {
@@ -349,13 +344,13 @@ void choix() {
             scanf("%s", filename);
 
             originalImage = loadPGM(filename);
-            mirroredImage = mirrorImage(&originalImage);
+            adjustedImage = mirrorImage(&originalImage);
 
             strcat(filename, "_MIROIR.pgm");
-            savePGM(filename, &mirroredImage);
+            savePGM(filename, &adjustedImage);
 
             free(originalImage.pixels);
-            free(mirroredImage.pixels);
+            free(adjustedImage.pixels);
 
             printf("\n\n\nL'image a bien été traité.\n\n\n");
 
@@ -372,13 +367,13 @@ void choix() {
             scanf("%d", &angle);
 
             originalImage = loadPGM(filename);
-            rotatedImage = rotateImage(&originalImage, angle);
+            adjustedImage = rotateImage(&originalImage, angle);
 
             strcat(filename, "_ROTATE.pgm");
-            savePGM(filename, &rotatedImage);
+            savePGM(filename, &adjustedImage);
 
             free(originalImage.pixels);
-            free(rotatedImage.pixels);
+            free(adjustedImage.pixels);
 
             printf("\n\n\nL'image a bien été traité.\n\n\n");
 
@@ -395,13 +390,13 @@ void choix() {
             scanf("%d", &x);
 
             originalImage = loadPGM(filename);
-            translatedImage = translateImage(&originalImage, x);
+            adjustedImage = translateImage(&originalImage, x);
 
             strcat(filename, "_TRANSLATE.pgm");
-            savePGM(filename, &translatedImage);
+            savePGM(filename, &adjustedImage);
 
             free(originalImage.pixels);
-            free(translatedImage.pixels);
+            free(adjustedImage.pixels);
 
             printf("\n\n\nL'image a bien été traité.\n\n\n");
 
@@ -418,13 +413,13 @@ void choix() {
             scanf("%lf", &scale_factor);
 
             originalImage = loadPGM(filename);
-            scaledImage = scaleImage(&originalImage, scale_factor);
+            adjustedImage = scaleImage(&originalImage, scale_factor);
 
             strcat(filename, "_SCALE.pgm");
-            savePGM(filename, &scaledImage);
+            savePGM(filename, &adjustedImage);
 
             free(originalImage.pixels);
-            free(scaledImage.pixels);
+            free(adjustedImage.pixels);
 
             printf("\n\n\nL'image a bien été traité.\n\n\n");
 
@@ -494,5 +489,5 @@ int main() {
 
     choix();
 
-
+    return 0;
 }
