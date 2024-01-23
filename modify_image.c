@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h> 
+#include <dirent.h>
+#include <math.h>
 
 typedef struct {
     int width;
@@ -100,21 +101,70 @@ GrayImage mirrorImage(const GrayImage* image) {
     return mirroredImage;
 }
 
-// Bonus. Fonction pour créer le négatif de l'image (sans miroir)
-GrayImage negativeImage(const GrayImage* image) {
-    GrayImage negativeImage;
-    negativeImage.width = image->width;
-    negativeImage.height = image->height;
-    negativeImage.pixels = (unsigned char*)malloc(image->width * image->height);
+// Fonction pour effectuer une rotation de l'image
+GrayImage rotateImage(const GrayImage* image, int angle) {
+    // Convertir l'angle en radians
+    double radian_angle = angle * (M_PI / 180.0);
 
-    for (int i = 0; i < image->height; i++) {
-        for (int j = 0; j < image->width; j++) {
-            negativeImage.pixels[i * image->width + j] = 255 - image->pixels[i * image->width + j];
+    int width = image->width;
+    int height = image->height;
+
+    // Calculer les nouvelles dimensions de l'image après la rotation
+    int new_width = (int)(fabs(width * cos(radian_angle)) + fabs(height * sin(radian_angle)));
+    int new_height = (int)(fabs(width * sin(radian_angle)) + fabs(height * cos(radian_angle)));
+
+    GrayImage rotatedImage;
+    rotatedImage.width = new_width;
+    rotatedImage.height = new_height;
+    rotatedImage.pixels = (unsigned char*)malloc(new_width * new_height);
+
+    if (rotatedImage.pixels == NULL) {
+        perror("Erreur d'allocation de mémoire");
+        exit(1);
+    }
+
+    // Calculer le centre de l'image d'origine
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+
+    // Parcourir les pixels de l'image résultante
+    for (int y = 0; y < new_height; y++) {
+        for (int x = 0; x < new_width; x++) {
+            // Coordonnées du pixel d'origine correspondant au pixel courant après rotation
+            double src_x = (x - new_width / 2.0) * cos(radian_angle) - (y - new_height / 2.0) * sin(radian_angle) + cx;
+            double src_y = (x - new_width / 2.0) * sin(radian_angle) + (y - new_height / 2.0) * cos(radian_angle) + cy;
+
+            // Interpolation bilinéaire pour obtenir la valeur du pixel après rotation
+            int x0 = (int)floor(src_x);
+            int y0 = (int)floor(src_y);
+            int x1 = x0 + 1;
+            int y1 = y0 + 1;
+
+            double dx = src_x - x0;
+            double dy = src_y - y0;
+
+            if (x0 >= 0 && x1 < width && y0 >= 0 && y1 < height) {
+                double pixel00 = image->pixels[y0 * width + x0];
+                double pixel01 = image->pixels[y0 * width + x1];
+                double pixel10 = image->pixels[y1 * width + x0];
+                double pixel11 = image->pixels[y1 * width + x1];
+
+                double interpolated_value = (1.0 - dx) * (1.0 - dy) * pixel00 +
+                                            dx * (1.0 - dy) * pixel01 +
+                                            (1.0 - dx) * dy * pixel10 +
+                                            dx * dy * pixel11;
+
+                rotatedImage.pixels[y * new_width + x] = (unsigned char)interpolated_value;
+            } else {
+                // Si les coordonnées sont en dehors de l'image d'origine, remplir en blanc (valeur 255)
+                rotatedImage.pixels[y * new_width + x] = 255;
+            }
         }
     }
 
-    return negativeImage;
+    return rotatedImage;
 }
+
 
 void choix() {
     int choixUtilisateur;
@@ -128,8 +178,9 @@ void choix() {
     printf("Entrez votre choix : ");
     scanf(" %d", &choixUtilisateur);
 
-    GrayImage originalImage; // Déplacer la déclaration ici
+    GrayImage originalImage; // Déclaration
     GrayImage mirroredImage;
+    GrayImage rotatedImage;
 
     switch (choixUtilisateur) {
         case 1: {
@@ -146,10 +197,27 @@ void choix() {
 
             free(originalImage.pixels);
             free(mirroredImage.pixels);
-            
+
             break;
         } case 2: {
+            char filename[256] = "";
+            int angle = 0;
 
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            printf("Entrez l'angle de rotation : ");
+            scanf("%d", &angle);
+
+            originalImage = loadPGM(filename);
+            rotatedImage = rotateImage(&originalImage, angle);
+
+            strcat(filename, "_ROTATE.pgm");
+            savePGM(filename, &rotatedImage);
+
+            free(originalImage.pixels);
+            free(rotatedImage.pixels);
+            
             break;
         } case 0: {
             printf("\n\n\nAurevoir.\n\n\n");
