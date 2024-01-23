@@ -29,7 +29,8 @@ void welcome() {
 // Detecter si le fichier est en ppm ou pgm et executer une fonction en conséquence (fonction en double, une pour pgm et une pour ppm).
 
 
-GrayImage mirrorImage(const GrayImage* image) {
+
+void mirrorImage(const GrayImage* image) {
     GrayImage mirroredImage;
     mirroredImage.width = image->width;
     mirroredImage.height = image->height;
