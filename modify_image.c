@@ -4,14 +4,6 @@
 #include <dirent.h>
 #include <math.h>
 
-typedef struct {
-    int width;
-    int height;
-    unsigned char *data_r; 
-    unsigned char *data_g; 
-    unsigned char *data_b; 
-} ColorImage;
-
 // PGM Structure pour stocker l'image en niveaux de gris
 typedef struct {
     int width;
@@ -315,6 +307,35 @@ GrayImage adjustBrightness(const GrayImage* image, double brightness_factor) {
     return adjustedImage;
 }
 
+// Fonction pour appliquer le seuillage à l'image
+GrayImage thresholdImage(const GrayImage* image, unsigned char threshold) {
+    int width = image->width;
+    int height = image->height;
+
+    GrayImage thresholdedImage;
+    thresholdedImage.width = width;
+    thresholdedImage.height = height;
+    thresholdedImage.pixels = (unsigned char*)malloc(width * height);
+
+    if (thresholdedImage.pixels == NULL) {
+        perror("Erreur d'allocation de mémoire");
+        exit(1);
+    }
+
+    // Parcourir les pixels de l'image et appliquer le seuillage
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            unsigned char pixel_value = image->pixels[y * width + x];
+            if (pixel_value < threshold) {
+                thresholdedImage.pixels[y * width + x] = 0; // Pixel noir
+            } else {
+                thresholdedImage.pixels[y * width + x] = 255; // Pixel blanc
+            }
+        }
+    }
+
+    return thresholdedImage;
+}
 
 
 void choix() {
@@ -328,6 +349,8 @@ void choix() {
     printf("4. Redimensionnement (Scale) de l'image\n\n");
     printf("5. Contraste de l'image\n");
     printf("6. Luminosité de l'image\n");
+    printf("7. Seuillage de l'image\n\n");
+    printf("8. Flou de l'image\n");
 
     printf("\n\n0. Quitter\n\n");
     printf("Entrez votre choix : ");
@@ -470,6 +493,32 @@ void choix() {
             printf("\n\n\nL'image a bien été traitée.\n\n\n");
 
             break;
+        }
+        case 7: {
+            char filename[256] = "";
+            unsigned char threshold = 0;
+
+            printf("Entrez le nom du fichier : ");
+            scanf("%s", filename);
+
+            printf("Entrez la valeur de seuillage (entre 0 et 255) : ");
+            scanf("%hhu", &threshold);
+
+            originalImage = loadPGM(filename);
+            adjustedImage = thresholdImage(&originalImage, threshold);
+
+            strcat(filename, "_THRESHOLD.pgm");
+            savePGM(filename, &adjustedImage);
+
+            free(originalImage.pixels);
+            free(adjustedImage.pixels);
+
+            printf("\n\n\nL'image a bien été traitée.\n\n\n");
+
+            break;
+        }
+        case 8: {
+            char filename[256] = "";
         }
         case 0: {
             printf("\n\n\nAurevoir.\n\n\n");
