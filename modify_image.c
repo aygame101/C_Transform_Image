@@ -142,10 +142,11 @@ void choix() {
             mirroredImage = mirrorImage(&originalImage);
 
             strcat(filename, "_MIROIR.pgm");
-
             savePGM(filename, &mirroredImage);
 
-
+            free(originalImage.pixels);
+            free(mirroredImage.pixels);
+            
             break;
         } case 2: {
 
