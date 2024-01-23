@@ -2,15 +2,18 @@
 Programme en Langage C pour transformer des images via un Menu au lancement du programme, on sélectionne l'image et quelle action on veut faire sur cette image.
 
 ### Done
--
-
-### To do
-- Menu pour sélectionner l'action voulu
 - Translation
 - Rotation
 - Scale
-- Superposition et soustraction d'image
 - Contraste
+
+### Doing
+- Menu pour sélectionner l'action voulu
+
+### To do
+
+
+- Superposition et soustraction d'image
 - Luminosité
 - Seuillage
 - Flouter
