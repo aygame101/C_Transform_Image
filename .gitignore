@@ -3,8 +3,11 @@ a.out
 
 # Fichier de trop Mac
 .DS_Store
+.vscode
 
 # Autres fichiers non nécessaire
 test.c
 tt.pgm_*
 image.pgm_*
+modify_image
+modify_image.o
