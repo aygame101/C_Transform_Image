@@ -1,4 +1,4 @@
-SRCS 	= modify_image.c
+SRCS 	= modify_images.c
 
 OBJS 	= ${SRCS:.c=.o}
 
