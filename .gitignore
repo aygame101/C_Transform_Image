@@ -1,6 +1,10 @@
 # Fichier compilé
 a.out
 
+# Fichier de trop Mac
+.DS_Store
+
+# Autres fichiers non nécessaire
 test.c
 tt.pgm_*
 image.pgm_*
