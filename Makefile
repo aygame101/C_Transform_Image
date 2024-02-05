@@ -20,6 +20,9 @@ clean:
 fclean:		clean
 			${RM} ${NAME}
 
+ffclean: 	fclean
+			${RM} image_*
+			
 re:			fclean all
 
 .PHONY:		clean all fclean re

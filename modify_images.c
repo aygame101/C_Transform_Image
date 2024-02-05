@@ -585,6 +585,9 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = mirrorImage(&originalImage);
 
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
+
         strcat(filename, "_MIROIR.pgm");
         savePGM(filename, &adjustedImage);
 
@@ -608,6 +611,9 @@ void choix()
 
         originalImage = loadPGM(filename);
         adjustedImage = rotateImage(&originalImage, angle);
+
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
 
         strcat(filename, "_ROTATE.pgm");
         savePGM(filename, &adjustedImage);
@@ -633,6 +639,9 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = translateImage(&originalImage, x);
 
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
+
         strcat(filename, "_TRANSLATE.pgm");
         savePGM(filename, &adjustedImage);
 
@@ -656,6 +665,9 @@ void choix()
 
         originalImage = loadPGM(filename);
         adjustedImage = scaleImage(&originalImage, scale_factor);
+
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
 
         strcat(filename, "_SCALE.pgm");
         savePGM(filename, &adjustedImage);
@@ -681,6 +693,9 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = adjustContrast(&originalImage, contrast_factor);
 
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
+
         strcat(filename, "_CONTRAST.pgm");
         savePGM(filename, &adjustedImage);
 
@@ -704,6 +719,9 @@ void choix()
 
         originalImage = loadPGM(filename);
         adjustedImage = adjustBrightness(&originalImage, brightness_factor);
+
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
 
         strcat(filename, "_BRIGHTNESS.pgm");
         savePGM(filename, &adjustedImage);
@@ -729,6 +747,9 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = thresholdImage(&originalImage, threshold);
 
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
+
         strcat(filename, "_THRESHOLD.pgm");
         savePGM(filename, &adjustedImage);
 
@@ -752,6 +773,9 @@ void choix()
 
         originalImage = loadPGM(filename);
         adjustedImage = applyBlur(&originalImage, blurAmount);
+
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
 
         strcat(filename, "_BLUR.pgm");
         savePGM(filename, &adjustedImage);
@@ -780,6 +804,9 @@ void choix()
 
         originalImage = loadPGM(filename);
         adjustedImage = pixelizeImage(&originalImage, pixelWidth, pixelHeight);
+
+        size_t newLength = strlen(filename) - 4;
+        filename[newLength] = '\0';
 
         strcat(filename, "_PIXELIZED.pgm");
         savePGM(filename, &adjustedImage);
