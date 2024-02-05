@@ -11,3 +11,5 @@ tt.pgm_*
 image.pgm_*
 modify_image
 modify_image.o
+modify_images
+modify_images.o
