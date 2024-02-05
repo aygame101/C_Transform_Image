@@ -1,11 +1,25 @@
-FILES 	= modify_image.c
+SRCS 	= modify_image.c
 
-OBJS 	= ${FILES:.c=.o}
+OBJS 	= ${SRCS:.c=.o}
 
 NAME 	= modify_images
 
-${NAME}: ${OBJS}
-	gcc -o ${NAME} ${OBJS}
+CC		= gcc
+RM		= rm -f
+
+CFLAGS	= -Wall -Wextra -Werror -g
+
+${NAME}:	${OBJS}
+			${CC} ${CFLAGS} -o ${NAME} ${OBJS}
+
+all:		${NAME}
 
 clean:
-	rm -f modify_images
+			${RM} ${OBJS}
+
+fclean:		clean
+			${RM} ${NAME}
+
+re:			fclean all
+
+.PHONY:		clean all fclean re
