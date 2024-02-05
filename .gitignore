@@ -13,3 +13,4 @@ modify_image
 modify_image.o
 modify_images
 modify_images.o
+image_*
