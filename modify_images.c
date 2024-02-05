@@ -84,7 +84,6 @@ GrayImage loadPGM(const char *filename)
     return image;
 }
 
-
 // On crée une fonction pour sauvegarder une image au format .pgm
 void savePGM(const char *filename, const GrayImage *image)
 {
@@ -106,7 +105,6 @@ void savePGM(const char *filename, const GrayImage *image)
     // On ferme le fichier après avoir sauvegardé l'image.
     fclose(file);
 }
-
 
 // On crée une fonction pour faire un effet miroir sur une image
 GrayImage mirrorImage(const GrayImage *image)
@@ -132,7 +130,6 @@ GrayImage mirrorImage(const GrayImage *image)
     // On renvoie l'image avec l'effet miroir.
     return mirroredImage;
 }
-
 
 // On crée une fonction pour faire tourner une image
 GrayImage rotateImage(const GrayImage *image, int angle)
@@ -211,7 +208,6 @@ GrayImage rotateImage(const GrayImage *image, int angle)
     // On renvoie l'image avec la rotation appliquée.
     return rotatedImage;
 }
-
 
 // Fonction pour effectuer la translation de l'image vers la droite
 GrayImage translateImage(const GrayImage *image, int x)
@@ -589,7 +585,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_MIROIR.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -616,7 +615,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_ROTATE.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -643,7 +645,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_TRANSLATE.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -670,7 +675,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_SCALE.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -697,7 +705,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_CONTRAST.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -724,7 +735,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_BRIGHTNESS.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -751,7 +765,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_THRESHOLD.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -778,7 +795,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_BLUR.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
@@ -809,7 +829,10 @@ void choix()
         filename[newLength] = '\0';
 
         strcat(filename, "_PIXELIZED.pgm");
-        savePGM(filename, &adjustedImage);
+
+        char outputPath[256] = "output/";
+        strcat(outputPath, filename);
+        savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
         free(adjustedImage.pixels);
