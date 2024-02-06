@@ -20,11 +20,13 @@ Programme en Langage C pour transformer des images via un Menu au lancement du p
 - Seuillage
 - Flou
 - Pixelisation
+- Menu pour sélectionner l'action voulu
+- Différents fichiers pour + de clarté
 
 ### Doing
-- Menu pour sélectionner l'action voulu
 
-### Restant
+
+### To do (optional)
 - Superposition et soustraction d'image
 - Négatif
 - Passer en niveau de gris
