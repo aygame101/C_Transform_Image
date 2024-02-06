@@ -20,7 +20,6 @@ Programme en Langage C pour transformer des images via un Menu au lancement du p
 - Seuillage
 - Flou
 - Pixelisation
-
 - Menu pour sélectionner l'action voulu
 - Différents fichiers pour + de clarté
 - Makefile
