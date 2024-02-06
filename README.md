@@ -6,8 +6,8 @@ Programme en Langage C pour transformer des images via un Menu au lancement du p
 2. Dans le repo executer "Make" pour que tout les fichiers soit compilés automatiquement.
 
 ### Autre commande :
-`make clean` pour retirer les fichiers objets (.o).
-`make fclean` pour retirer les fichiers objets + l'executable.
+`make clean` pour retirer les fichiers objets (.o).\
+`make fclean` pour retirer les fichiers objets + l'executable.\
 `make re` va executer les deux make précédent et recompiler le projet.
 
 ### Done
