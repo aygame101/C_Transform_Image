@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "library.h"
+#include "../library.h"
 
 // Fonction pour charger une image au format .pgm
 GrayImage loadPGM(const char *filename)
