@@ -19,9 +19,6 @@ clean:
 
 fclean:		clean
 			${RM} ${NAME}
-
-ffclean: 	fclean
-			${RM} image_*
 			
 re:			fclean all
 
