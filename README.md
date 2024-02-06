@@ -2,8 +2,8 @@
 Programme en Langage C pour transformer des images via un Menu au lancement du programme, on sélectionne l'image et quelle action on veut faire sur cette image.
 
 ### Install
-1. Cloner le repo
-2. Dans le repo executer "Make" pour que tout les fichiers soit compilés automatiquement.
+1. Cloner le repo avec `https://github.com/aygame101/C_Transform_Image.git`
+2. Dans le repo executer `Make` pour que tout les fichiers soit compilés automatiquement.
 
 ### Autre commande :
 `make clean` pour retirer les fichiers objets (.o).\
