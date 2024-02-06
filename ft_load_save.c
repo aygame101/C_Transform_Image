@@ -49,6 +49,7 @@ GrayImage loadPGM(const char *filename)
     return image;
 }
 
+// Fonction pour sauvegarder une image au format .pgm
 void savePGM(const char *filename, const GrayImage *image)
 {
     FILE *file = fopen(filename, "wb");
