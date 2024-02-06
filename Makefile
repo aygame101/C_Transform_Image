@@ -1,4 +1,4 @@
-SRCS 	= main.c ft_choix.c ft_welcome.c ft_images.c
+SRCS 	= main.c ft_choix.c ft_welcome.c ft_images.c ft_save_load.c
 
 OBJS 	= ${SRCS:.c=.o}
 
