@@ -4,7 +4,7 @@
 #include <dirent.h>
 #include <math.h>
 
-#include "../library.h"
+#include "library.h"
 
 void choix()
 {

@@ -4,7 +4,7 @@
 #include <dirent.h>
 #include <math.h>
 
-#include "../library.h"
+#include "library.h"
 
 // On crée une fonction pour faire un effet miroir sur une image
 GrayImage mirrorImage(const GrayImage *image)
