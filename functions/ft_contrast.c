@@ -31,7 +31,7 @@ GrayImage adjustContrast(const GrayImage *image, double contrast_factor)
             double pixel_value = (double)image->pixels[y * width + x];
             double adjusted_value = contrast_factor * (pixel_value - 127.0) + 127.0;
 
-            // Assurer que la valeur ajustée reste dans la plage [0, 255]
+            // s'assurer que la valeur ajustée reste dans la plage [0, 255]
             adjusted_value = fmin(255.0, fmax(0.0, adjusted_value));
 
             adjustedImage.pixels[y * width + x] = (unsigned char)adjusted_value;

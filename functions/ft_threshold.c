@@ -23,7 +23,6 @@ GrayImage thresholdImage(const GrayImage *image, unsigned char threshold)
         exit(1);
     }
 
-    // Parcourir les pixels de l'image et appliquer le seuillage
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -31,11 +30,11 @@ GrayImage thresholdImage(const GrayImage *image, unsigned char threshold)
             unsigned char pixel_value = image->pixels[y * width + x];
             if (pixel_value < threshold)
             {
-                thresholdedImage.pixels[y * width + x] = 0; // Pixel noir
+                thresholdedImage.pixels[y * width + x] = 0;
             }
             else
             {
-                thresholdedImage.pixels[y * width + x] = 255; // Pixel blanc
+                thresholdedImage.pixels[y * width + x] = 255;
             }
         }
     }

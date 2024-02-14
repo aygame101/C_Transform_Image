@@ -23,19 +23,17 @@ GrayImage translateImage(const GrayImage *image, int x)
         exit(1);
     }
 
-    // Effectuer la translation en copiant les pixels de l'image originale
     for (int y = 0; y < height; y++)
     {
         for (int x_dest = 0; x_dest < width; x_dest++)
         {
-            int x_src = (x_dest - x) % width; // Calculer la nouvelle position x_src
+            int x_src = (x_dest - x) % width;
 
             if (x_src < 0)
             {
-                x_src += width; // Si x_src est négatif, le ramener à la position valide
+                x_src += width;
             }
 
-            // Copier le pixel de l'image originale vers l'image traduite
             translatedImage.pixels[y * width + x_dest] = image->pixels[y * width + x_src];
         }
     }

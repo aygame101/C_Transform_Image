@@ -23,12 +23,10 @@ GrayImage applyBlur(const GrayImage *image, int blurAmount)
         exit(1);
     }
 
-    // Créer un noyau de flou (ici, un noyau de moyenne)
     double kernel[3][3] = {{1.0 / 9, 1.0 / 9, 1.0 / 9},
                            {1.0 / 9, 1.0 / 9, 1.0 / 9},
                            {1.0 / 9, 1.0 / 9, 1.0 / 9}};
 
-    // Appliquer le flou en fonction de la valeur de flou
     for (int amount = 0; amount < blurAmount; amount++)
     {
         for (int y = 0; y < height; y++)
@@ -44,7 +42,7 @@ GrayImage applyBlur(const GrayImage *image, int blurAmount)
                         int newX = x + j;
                         int newY = y + i;
 
-                        // Assurer que nous sommes à l'intérieur de l'image
+                        // s'assurer que nous sommes à l'intérieur de l'image
                         if (newX >= 0 && newX < width && newY >= 0 && newY < height)
                         {
                             sum += kernel[i + 1][j + 1] * image->pixels[newY * width + newX];
