@@ -6,6 +6,17 @@
 
 #include "library.h"
 
+void prepareOutputPath(char *filename, const char *suffix, char *outputPath)
+{
+    size_t newLength = strlen(filename) - 4;
+    filename[newLength] = '\0';
+
+    strcat(filename, suffix);
+
+    strcpy(outputPath, "output/");
+    strcat(outputPath, filename);
+}
+
 void choix()
 {
     int choixUtilisateur;
@@ -34,6 +45,7 @@ void choix()
     case 1:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
 
         printf("Entrez le nom du fichier : ");
         scanf("%s", filename);
@@ -41,13 +53,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = mirrorImage(&originalImage);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_MIROIR.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_MIROIR.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -60,6 +66,7 @@ void choix()
     case 2:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         int angle = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -71,13 +78,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = rotateImage(&originalImage, angle);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_ROTATE.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_ROTATE.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -90,6 +91,7 @@ void choix()
     case 3:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         int x = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -101,13 +103,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = translateImage(&originalImage, x);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_TRANSLATE.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_TRANSLATE.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -120,6 +116,7 @@ void choix()
     case 4:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         double scale_factor = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -131,13 +128,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = scaleImage(&originalImage, scale_factor);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_SCALE.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_SCALE.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -150,6 +141,7 @@ void choix()
     case 5:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         double contrast_factor = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -161,13 +153,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = adjustContrast(&originalImage, contrast_factor);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_CONTRAST.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_CONTRAST.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -180,6 +166,7 @@ void choix()
     case 6:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         double brightness_factor = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -191,13 +178,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = adjustBrightness(&originalImage, brightness_factor);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_BRIGHTNESS.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_BRIGHTNESS.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -210,6 +191,7 @@ void choix()
     case 7:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         unsigned char threshold = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -221,13 +203,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = thresholdImage(&originalImage, threshold);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_THRESHOLD.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_THRESHOLD.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -240,6 +216,7 @@ void choix()
     case 8:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         int blurAmount = 0;
 
         printf("Entrez le nom du fichier : ");
@@ -251,13 +228,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = applyBlur(&originalImage, blurAmount);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_BLUR.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_BLUR.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
@@ -270,6 +241,7 @@ void choix()
     case 9:
     {
         char filename[256] = "";
+        char outputPath[256] = "";
         int pixelWidth = 0;
         int pixelHeight = 0;
 
@@ -285,13 +257,7 @@ void choix()
         originalImage = loadPGM(filename);
         adjustedImage = pixelizeImage(&originalImage, pixelWidth, pixelHeight);
 
-        size_t newLength = strlen(filename) - 4;
-        filename[newLength] = '\0';
-
-        strcat(filename, "_PIXELIZED.pgm");
-
-        char outputPath[256] = "output/";
-        strcat(outputPath, filename);
+        prepareOutputPath(filename, "_PIXELIZED.pgm", outputPath);
         savePGM(outputPath, &adjustedImage);
 
         free(originalImage.pixels);
