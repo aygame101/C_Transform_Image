@@ -267,6 +267,7 @@ void choix()
 
         break;
     }
+    
     case 0:
     {
         printf("\n\n\nAurevoir.\n\n\n");
